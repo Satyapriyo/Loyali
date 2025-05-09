@@ -43,8 +43,9 @@ export default function Rewards() {
                             className="rounded-2xl hover:shadow-xl transition-all duration-300 border-none hover:scale-105 shadow-2xl"
                         >
                             <CardHeader className="p-1">
-                                <Image
+                                <img
                                     src={cnft.content.links.image}
+                                   
                                     alt={cnft.content.metadata.name}
                                     className="w-full h-48 object-cover rounded-2xl"
                                 />

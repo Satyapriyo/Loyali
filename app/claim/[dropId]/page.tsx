@@ -71,7 +71,7 @@ export default function ClaimPage() {
 
       {metadata && (
         <div className="border p-4 rounded shadow mb-4">
-          <Image src={metadata.image} alt="NFT" className="w-48 h-48 object-cover rounded" />
+          <img src={metadata.image} alt="NFT" className="w-48 h-48 object-cover rounded" />
           <h2 className="text-xl mt-2">{metadata.name}</h2>
           <p>{metadata.description}</p>
         </div>

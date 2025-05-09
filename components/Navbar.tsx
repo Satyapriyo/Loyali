@@ -23,7 +23,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between gap-4">
                     {/* Logo and Brand */}
                     <Link href="/" className="flex items-center space-x-3 shrink-0">
-                        <Image src="/punks/punk1.svg" alt="Logo" width={36} height={36} className="rounded-lg ring-1 ring-gray-800/50" />
+                        <img src="/punks/punk1.svg" alt="Logo" width={36} height={36} className="rounded-lg ring-1 ring-gray-800/50" />
                         <span className="text-lg font-bold bg-gradient-to-r from-violet-500 to-indigo-500 bg-clip-text text-transparent whitespace-nowrap">
                             SolanaPunks
                         </span>

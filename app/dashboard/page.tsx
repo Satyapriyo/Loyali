@@ -174,7 +174,7 @@ export default function Dashboard() {
                             >
                                 <input {...getInputCollectionProps()} />
                                 {collectionPreview ? (
-                                    <Image
+                                    <img
                                         src={collectionPreview}
                                         alt="Collection Preview"
                                         className="w-full h-48 object-contain rounded-lg"
@@ -193,7 +193,7 @@ export default function Dashboard() {
                             >
                                 <input {...getInputCnftProps()} />
                                 {cnftPreview ? (
-                                    <Image
+                                    <img
                                         src={cnftPreview}
                                         alt="CNFT Preview"
                                         className="w-full h-48 object-contain rounded-lg"

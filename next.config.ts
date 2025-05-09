@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
+  images: {
+    domains: ["gateway.pinata.cloud"],
+  },
 };
 
 export default nextConfig;
