@@ -16,6 +16,7 @@ import { publicKey as umiPublicKey } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { web3JsRpc } from "@metaplex-foundation/umi-rpc-web3js";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { TokenStandard } from "@metaplex-foundation/mpl-token-metadata";
 
 /**
  * Delegates collection authority to a platform wallet.
@@ -70,20 +71,19 @@ export async function delegateCollectionAuthority(
     }).sendAndConfirm(umi);
 
     // Create and send the transaction
-    const transaction = new Transaction().add(instruction);
-    transaction.feePayer = creatorPublicKey;
-    const { blockhash } = await connection.getRecentBlockhash();
-    transaction.recentBlockhash = blockhash;
+    // const transaction = new Transaction().add(instruction);
+    // transaction.feePayer = creatorPublicKey;
+    // const { blockhash } = await connection.getRecentBlockhash();
+    // transaction.recentBlockhash = blockhash;
 
-    const signedTransaction = await provider.signTransaction(transaction);
-    const signature = await connection.sendRawTransaction(
-      signedTransaction.serialize()
-    );
-    await connection.confirmTransaction(signature, "processed");
+    // const signedTransaction = await provider.signTransaction(transaction);
+    // const signature = await connection.sendRawTransaction(
+    //   signedTransaction.serialize()
+    // );
+    // await connection.confirmTransaction(signature, "processed");
 
     console.log(
-      "✅ Collection authority delegated successfully. Transaction signature:",
-      signature
+      "✅ Collection authority delegated successfully. Transaction signature:"
     );
   } catch (error) {
     console.error("❌ Error delegating collection authority:", error);

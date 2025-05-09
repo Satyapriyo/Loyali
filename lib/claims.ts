@@ -39,7 +39,7 @@ export const claimCnfts = async (
 ) => {
   try {
     // Load platform signer key
-    const secretKey = getPlatformWallet();
+    const secretKey =await getPlatformWallet();
     console.log("SecretKey", secretKey);
     const solanaKeypair = Keypair.fromSecretKey(secretKey);
     const umiKeypair = fromWeb3JsKeypair(solanaKeypair);
@@ -53,7 +53,7 @@ export const claimCnfts = async (
       .use(mplTokenMetadata())
       .use(irysUploader({ address: "https://devnet.irys.xyz" }));
 
-    const umiSigner = createSignerFromKeypair(umi, solanaKeypair);
+    
 
     if (!wallet?.publicKey) {
       throw new Error("Wallet must be connected to use Umi");
@@ -84,7 +84,7 @@ export const claimCnfts = async (
       merkleTree: publicKey(merkle_tree),
       collectionMint: publicKey(collectionMint),
       collectionMetadata: collectionMetadataPda,
-      collectionAuthority: umiSigner, // 🔑 must match who was delegated
+      // 🔑 must match who was delegated
       collectionAuthorityRecordPda, // 🔑 required if using delegated authority
       metadata: {
         name: metadata.name ?? "Compressed NFT",

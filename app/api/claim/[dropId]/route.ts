@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+
 import {
   mplBubblegum,
   mintToCollectionV1,
@@ -11,7 +11,7 @@ import {
   mplTokenMetadata,
   findMetadataPda,
 } from "@metaplex-foundation/mpl-token-metadata";
-import { createSignerFromKeypair } from "@metaplex-foundation/umi";
+
 import { fromWeb3JsKeypair } from "@metaplex-foundation/umi-web3js-adapters";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { irysUploader } from "@metaplex-foundation/umi-uploader-irys";
@@ -20,9 +20,9 @@ import {
   publicKey as umiPublicKey,
 } from "@metaplex-foundation/umi";
 import bs58 from "bs58";
-import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
+import { Connection, clusterApiUrl  } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
-import { getDrop } from "@/lib/db";
+
 // Load platform signer key
 const secretKey = process.env.PLATFORM_WALLET!;
 const decoded = bs58.decode(secretKey);
