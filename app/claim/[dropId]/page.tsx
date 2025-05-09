@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useParams } from "next/navigation";
-import { claimCnfts } from "@/lib/claims";
+import Image from "next/image";
+// import { claimCnfts } from "@/lib/claims";
 
 export default function ClaimPage() {
   const { wallet, connected, publicKey } = useWallet();
@@ -70,7 +71,7 @@ export default function ClaimPage() {
 
       {metadata && (
         <div className="border p-4 rounded shadow mb-4">
-          <img src={metadata.image} alt="NFT" className="w-48 h-48 object-cover rounded" />
+          <Image src={metadata.image} alt="NFT" className="w-48 h-48 object-cover rounded" />
           <h2 className="text-xl mt-2">{metadata.name}</h2>
           <p>{metadata.description}</p>
         </div>

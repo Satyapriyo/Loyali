@@ -5,6 +5,7 @@ import { fetchUserCNFTs } from "@/lib/cnfts";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 export default function Rewards() {
     const { publicKey } = useWallet();
@@ -42,7 +43,7 @@ export default function Rewards() {
                             className="rounded-2xl hover:shadow-xl transition-all duration-300 border-none hover:scale-105 shadow-2xl"
                         >
                             <CardHeader className="p-1">
-                                <img
+                                <Image
                                     src={cnft.content.links.image}
                                     alt={cnft.content.metadata.name}
                                     className="w-full h-48 object-cover rounded-2xl"

@@ -6,10 +6,10 @@ import {
   findLeafAssetIdPda,
 } from "@metaplex-foundation/mpl-bubblegum";
 import { NextRequest, NextResponse } from "next/server";
-import { findCollectionAuthorityRecordPda } from "@metaplex-foundation/mpl-token-metadata";
+
 import {
   mplTokenMetadata,
-  findMetadataPda,
+  // findMetadataPda,
 } from "@metaplex-foundation/mpl-token-metadata";
 
 import { fromWeb3JsKeypair } from "@metaplex-foundation/umi-web3js-adapters";
@@ -40,10 +40,10 @@ export async function POST(
   const recipient = body.recipient;
   const merkle_tree = body.merkle_tree;
   const metadata_url = body.metadataUrl;
-  const creator_address = body.creator_address;
+
   const collectionMint = body.collectionMint;
   const collectionMetadata = body.collectionMetadata;
-  const collectionMasterEdition = body.collectionMasterEdition;
+
   console.log("Recipient:", recipient);
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
@@ -80,14 +80,14 @@ export async function POST(
       .use(irysUploader({ address: "https://devnet.irys.xyz" }));
     // const umiSigner = createSignerFromKeypair(umi, solanaKeypair);
 
-    const collectionMetadataPda = findMetadataPda(umi, {
-      mint: collectionMint,
-    });
-    const collectionAuthority = umiPublicKey(umiKeypair.publicKey);
-    const collectionAuthorityRecordPda = findCollectionAuthorityRecordPda(umi, {
-      mint: umiPublicKey(collectionMint),
-      collectionAuthority,
-    });
+    // const collectionMetadataPda = findMetadataPda(umi, {
+    //   mint: collectionMint,
+    // });
+    // const collectionAuthority = umiPublicKey(umiKeypair.publicKey);
+    // const collectionAuthorityRecordPda = findCollectionAuthorityRecordPda(umi, {
+    //   mint: umiPublicKey(collectionMint),
+    //   collectionAuthority,
+    // });
     const { name } = await (await fetch(metadata_url)).json();
 
     const { signature } = await mintToCollectionV1(umi, {

@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { createCnft } from "@/lib/umi";
 import { toast } from "sonner"
 import { createDrop } from "@/lib/db";
+import Image from "next/image";
 
 
 export default function Dashboard() {
@@ -173,7 +174,7 @@ export default function Dashboard() {
                             >
                                 <input {...getInputCollectionProps()} />
                                 {collectionPreview ? (
-                                    <img
+                                    <Image
                                         src={collectionPreview}
                                         alt="Collection Preview"
                                         className="w-full h-48 object-contain rounded-lg"
@@ -192,7 +193,7 @@ export default function Dashboard() {
                             >
                                 <input {...getInputCnftProps()} />
                                 {cnftPreview ? (
-                                    <img
+                                    <Image
                                         src={cnftPreview}
                                         alt="CNFT Preview"
                                         className="w-full h-48 object-contain rounded-lg"
