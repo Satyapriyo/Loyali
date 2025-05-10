@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
     return (
-        <section className="pt-28 pb-20 md:pt-36 md:pb-24 hero-gradient">
+        <section className="pt-28 pb-20 md:pt-36 md:pb-24 hero-gradient from-loyali-light to-loyali-primary">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                     {/* Left content */}
