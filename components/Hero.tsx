@@ -4,8 +4,8 @@ import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
     return (
-        <section className="pt-32 pb-20 md:pt-36 md:pb-24 hero-gradient -mt-4 ">
-            <div className="container mx-auto px-4">
+        <section className="pt-32 pb-20 md:pt-36 md:pb-24 bg-gradient-to-tr from-loyali-light to-loyali-secondary -mt-4 ">
+            <div className="container mx-auto px-4 ">
                 <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                     {/* Left content */}
                     <div className="w-full md:w-1/2 space-y-6">
@@ -38,7 +38,7 @@ const Hero = () => {
                                     L
                                 </div>
                                 <div className="text-center">
-                                    <h3 className="font-bold text-xl">Loyali Genesis Badge</h3>
+                                    <h3 className="font-bold text-xl text-black">Loyali Genesis Badge</h3>
                                     <p className="text-slate-600">Early Adopter Reward</p>
                                     <div className="mt-3 inline-block badge-gradient text-white px-3 py-1 rounded-full text-sm">
                                         Solana cNFT
