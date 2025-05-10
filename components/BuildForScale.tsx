@@ -15,11 +15,11 @@ const BuildForScale = () => {
                         </p>
                         <div className="bg-white p-6 rounded-xl border border-slate-200 mb-6">
                             <div className="flex justify-between mb-3">
-                                <span className="font-medium">Traditional NFTs</span>
+                                <span className="font-medium text-black">Traditional NFTs</span>
                                 <span className="text-red-500">~$1-2 per NFT</span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="font-medium">Compressed NFTs</span>
+                                <span className="font-medium text-black">Compressed NFTs</span>
                                 <span className="text-green-500">~$0.0001 per cNFT</span>
                             </div>
                         </div>

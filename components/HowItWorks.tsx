@@ -8,7 +8,7 @@ const StepCard = ({ number, title, description }: { number: number, title: strin
                 {number}
             </div>
             <div className="pl-8 pt-8">
-                <h3 className="text-xl font-semibold mb-2">{title}</h3>
+                <h3 className="text-xl font-semibold mb-2 text-black">{title}</h3>
                 <p className="text-slate-600">{description}</p>
             </div>
         </div>
@@ -39,7 +39,7 @@ const HowItWorks = () => {
         <section className="py-20 bg-white" id="how-it-works">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black">
                         How It <span className="bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Works</span>
                     </h2>
                     <p className="text-xl text-slate-600 max-w-3xl mx-auto">

@@ -1,57 +1,20 @@
 "use client";
-import WalletButton from "@/components/WalletButton";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+
 import React from 'react';
-import Header from '@/components/Header';
+
 import Hero from '@/components/Hero';
 import WhatIsLoyali from '@/components/WhatIsLoyali';
 import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
 import BuildForScale from '@/components/BuildForScale';
 import ForWhoSection from '@/components/ForWhoSection';
-
-import Pricing from '@/components/Pricing';
 import CtaSection from '@/components/CtaSection';
 
-
-
-import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import {
-  CheckCircle,
-  Star,
-  Wallet,
-  Upload,
-  Share2,
-  ArrowRight,
-  CheckCircle2,
-  ChevronRight,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Github,
-} from "lucide-react"
-
-import Link from "next/link"
-const punks = [
-  { id: 1, name: "Punk #1", price: "2.5 SOL", image: "/punks/punk1.svg" },
-  { id: 2, name: "Punk #2", price: "3.2 SOL", image: "/punks/punk2.svg" },
-  { id: 3, name: "Punk #3", price: "1.8 SOL", image: "/punks/punk3.svg" },
-];
-
-const transactions = [
-  { id: 1, name: "Punk #156", price: "5.2 SOL", image: "/punks/punk4.svg" },
-  { id: 2, name: "Punk #342", price: "4.1 SOL", image: "/punks/punk5.svg" },
-  { id: 3, name: "Punk #721", price: "3.7 SOL", image: "/punks/punk6.svg" },
-];
-import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <div className="min-h-screen bg-loyali-light">
+      <div className="min-h-screen">
         <Hero />
         <WhatIsLoyali />
         <Features />
@@ -59,7 +22,6 @@ export default function Home() {
         <ForWhoSection />
         <BuildForScale />
 
-        <Pricing />
         <CtaSection />
         <Footer />
       </div>

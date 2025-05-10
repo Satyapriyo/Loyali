@@ -64,43 +64,45 @@ const DropsPage = () => {
     }, [drops]);
 
     return (
-        <div className="p-6 space-y-6 max-w-4xl mx-auto -mt-4 pt-4 bg-loyali-secondary  h-screen w-[100vw]">
-            <h1 className="text-3xl font-bold mt-10">Active Drops</h1>
-            {loading ? (
-                <div className="space-y-4">
-                    {[...Array(3)].map((_, i) => (
-                        <Skeleton key={i} className="h-32 w-full rounded-xl" />
-                    ))}
-                </div>
-            ) : drops.length === 0 ? (
-                <p className="text-muted-foreground">No active drops available.</p>
-            ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {drops.map((drop) => {
-                        const dropMetadata = metadata[drop.id];
-                        return (
-                            <Card key={drop.id} className="flex flex-col justify-between">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">{dropMetadata?.name || "Loading..."}</CardTitle>
-                                    <CardDescription className="text-sm">{dropMetadata?.description || "Loading..."}</CardDescription>
-                                </CardHeader>
-                                <div className="flex justify-center mt-4">
-                                    <img
-                                        src={dropMetadata?.image || "/default-image.png"}
-                                        alt={dropMetadata?.name || "Drop Image"}
-                                        className="w-32 h-32 object-cover rounded-lg"
-                                    />
-                                </div>
-                                <CardContent className="flex justify-between items-center pt-4">
-                                    <Link href={`/claim/${drop.id}`}>
-                                        <Button className="bg-purple-400 text-white hover:bg-purple-300 cursor-pointer">Claim</Button>
-                                    </Link>
-                                </CardContent>
-                            </Card>
-                        );
-                    })}
-                </div>
-            )}
+        <div className="w-[99vw] bg-gradient-to-r from-purple-100 to-purple-200 -mt-4 pt-4 ">
+            <div className="p-6 space-y-6 max-w-4xl mx-auto  h-screen">
+                <h1 className="text-3xl font-bold mt-10 bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Active Drops</h1>
+                {loading ? (
+                    <div className="space-y-4">
+                        {[...Array(3)].map((_, i) => (
+                            <Skeleton key={i} className="h-32 w-full rounded-xl" />
+                        ))}
+                    </div>
+                ) : drops.length === 0 ? (
+                    <p className="text-muted-foreground">No active drops available.</p>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {drops.map((drop) => {
+                            const dropMetadata = metadata[drop.id];
+                            return (
+                                <Card key={drop.id} className="flex flex-col border-none hover:shadow-md duration-100 justify-between bg-white">
+                                    <CardHeader>
+                                        <CardTitle className="text-lg">{dropMetadata?.name || "Loading..."}</CardTitle>
+                                        <CardDescription className="text-sm">{dropMetadata?.description || "Loading..."}</CardDescription>
+                                    </CardHeader>
+                                    <div className="flex justify-center mt-4">
+                                        <img
+                                            src={dropMetadata?.image || "/default-image.png"}
+                                            alt={dropMetadata?.name || "Drop Image"}
+                                            className="w-32 h-32 object-cover rounded-lg"
+                                        />
+                                    </div>
+                                    <CardContent className="flex justify-between items-center pt-4">
+                                        <Link href={`/claim/${drop.id}`}>
+                                            <Button className="bg-purple-400 text-white hover:bg-purple-300 cursor-pointer">Claim</Button>
+                                        </Link>
+                                    </CardContent>
+                                </Card>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

@@ -22,10 +22,10 @@ export default function Rewards() {
     console.log(cnfts);
 
     return (
-        <div className="min-h-screen px-6 py-16 bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200">
-             <div className="text-center mb-16"> 
-        <h1 className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-violet-400 to-indigo-500 text-transparent bg-clip-text"> Your NFTs </h1> 
-        <p className="text-gray-800 mt-4 text-lg"> A collection of your compressed NFTs </p> </div>
+        <div className="min-h-screen px-6 -mt-4 py-20 bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200">
+            <div className="text-center mb-16">
+                <h1 className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-violet-400 to-indigo-500 text-transparent bg-clip-text"> Your NFTs </h1>
+                <p className="text-gray-800 mt-4 text-lg"> A collection of your compressed NFTs </p> </div>
             {loading ? (
                 <div className="flex justify-center items-center h-64">
                     <Loader2 className="h-12 w-12 animate-spin text-violet-500" />
@@ -35,7 +35,7 @@ export default function Rewards() {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
                     {cnfts.map((cnft) => (
-                        <Card key={cnft.id} className="rounded-2xl bg-white/10 backdrop-blur-md hover:shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300 border border-violet-500/20 overflow-hidden" >
+                        <Card key={cnft.id} className="rounded-2xl bg-white/10 backdrop-blur-md hover:shadow-md cursor-pointer  transition-transform duration-300 border border-violet-500/20 overflow-hidden" >
                             <CardHeader className="p-0">
                                 <img src={cnft.content.links.image} alt={cnft.content.metadata.name} className="w-full h-52 object-cover" />
                             </CardHeader>
