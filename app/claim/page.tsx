@@ -64,8 +64,8 @@ const DropsPage = () => {
     }, [drops]);
 
     return (
-        <div className="p-6 space-y-6 max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold">Active Drops</h1>
+        <div className="p-6 space-y-6 max-w-4xl mx-auto -mt-4 pt-4 bg-loyali-secondary  h-screen w-[100vw]">
+            <h1 className="text-3xl font-bold mt-10">Active Drops</h1>
             {loading ? (
                 <div className="space-y-4">
                     {[...Array(3)].map((_, i) => (
