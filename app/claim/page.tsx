@@ -82,7 +82,7 @@ const DropsPage = () => {
                             return (
                                 <Card key={drop.id} className="flex flex-col border-none hover:shadow-md duration-100 justify-between bg-white">
                                     <CardHeader>
-                                        <CardTitle className="text-lg">{dropMetadata?.name || "Loading..."}</CardTitle>
+                                        <CardTitle className="text-lg text-black">{dropMetadata?.name || "Loading..."}</CardTitle>
                                         <CardDescription className="text-sm">{dropMetadata?.description || "Loading..."}</CardDescription>
                                     </CardHeader>
                                     <div className="flex justify-center mt-4">
