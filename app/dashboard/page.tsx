@@ -6,252 +6,312 @@ import { createCnft } from "@/lib/umi";
 import { toast } from "sonner"
 import { createDrop } from "@/lib/db";
 import Image from "next/image";
-
+import { PublicKey, Transaction, SystemProgram, Connection } from '@solana/web3.js';
+import {
+  publicKey as umiPublicKey
+} from "@metaplex-foundation/umi";
 
 export default function Dashboard() {
-    const { wallet, connected, publicKey } = useWallet();
-    const [nftName, setNftName] = useState("");
-    const [nftSymbol, setNftSymbol] = useState("");
-    const [nftDescription, setNftDescription] = useState("");
-    const [claimLink, setClaimLink] = useState<string | null>(null);
+  const { publicKey, sendTransaction, signTransaction, connected, wallet } = useWallet();
+  const [nftName, setNftName] = useState("");
+  const [nftSymbol, setNftSymbol] = useState("");
+  const [nftDescription, setNftDescription] = useState("");
+  const [claimLink, setClaimLink] = useState<string | null>(null);
 
-    const [collectionImageFile, setCollectionImageFile] = useState<File | null>(null);
-    const [cnftImageFile, setCnftImageFile] = useState<File | null>(null);
-    const [collectionPreview, setCollectionPreview] = useState<string | undefined>();
-    const [cnftPreview, setCnftPreview] = useState<string | undefined>();
+  const [collectionImageFile, setCollectionImageFile] = useState<File | null>(null);
+  const [cnftImageFile, setCnftImageFile] = useState<File | null>(null);
+  const [collectionPreview, setCollectionPreview] = useState<string | undefined>();
+  const [cnftPreview, setCnftPreview] = useState<string | undefined>();
+  const [approving, setApproving] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
-    const [isUploading, setIsUploading] = useState(false);
+  const makePaymet = async () => {
+    if (!publicKey) {
+      alert('Connect your wallet first.');
+      throw new Error('Wallet not connected.');
+    }
+
+    setApproving(true);
+    const walletAddress = process.env.NEXT_PUBLIC_PLATFORM_WALLET_ADDRESS!;
+
+    try {
+      const platformWalletPublicKey = new PublicKey(walletAddress);
+      const connection = new Connection('https://api.devnet.solana.com');
+
+      const latestBlockhash = await connection.getLatestBlockhash();
+
+      // Estimate 0.005 SOL per NFT
+      const lamportsPerNFT = 30000.0; // 0.00003 SOL in lamports
+      const totalLamports = quantity * lamportsPerNFT;
+
+      const tx = new Transaction({
+        feePayer: publicKey,
+        recentBlockhash: latestBlockhash.blockhash,
+      }).add(
+        SystemProgram.transfer({
+          fromPubkey: publicKey,
+          toPubkey: platformWalletPublicKey,
+          lamports: totalLamports,
+        })
+      );
+
+      if (!signTransaction) {
+        alert('Wallet is not connected properly. Please reconnect.');
+        throw new Error('signTransaction not available.');
+      }
+
+      const signedTx = await signTransaction(tx);
+      const txId = await connection.sendRawTransaction(signedTx.serialize());
+
+      // ✅ Wait for confirmation
+      const confirmation = await connection.confirmTransaction(
+        {
+          signature: txId,
+          blockhash: latestBlockhash.blockhash,
+          lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+        },
+        'confirmed'
+      );
+
+      if (confirmation.value.err) {
+        console.error('Transaction failed:', confirmation.value.err);
+        alert('Payment transaction failed.');
+        throw new Error('Payment failed');
+      }
+
+      console.log('Funding transaction confirmed. Tx ID:', txId);
+      setIsApproved(true);
+      alert(`Platform funded with ${(totalLamports / 1e9).toFixed(4)} SOL successfully!`);
+    } catch (error) {
+      console.error('Error during funding/approval:', error);
+      alert('Failed to approve and fund the platform wallet.');
+      throw error; // rethrow so mintCNFT() can catch it
+    } finally {
+      setApproving(false);
+    }
+  };
 
 
-    const uploadMetadataToPinata = async (metadata: Record<string, any>) => {
-        const response = await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`, // or use a secure backend route
-            },
-            body: JSON.stringify(metadata),
-        });
+  const uploadMetadataToPinata = async (metadata: Record<string, any>) => {
+    const response = await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`, // or use a secure backend route
+      },
+      body: JSON.stringify(metadata),
+    });
 
-        if (!response.ok) throw new Error("Failed to upload metadata to Pinata");
+    if (!response.ok) throw new Error("Failed to upload metadata to Pinata");
 
-        const data = await response.json();
-        return `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
-    };
-    const handleUploadToPinata = async (file: File) => {
-        const formData = new FormData();
-        formData.append("file", file);
+    const data = await response.json();
+    return `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
+  };
+  const handleUploadToPinata = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
 
-        const response = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-        });
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
 
-        if (!response.ok) throw new Error("Failed to upload image to Pinata");
+    if (!response.ok) throw new Error("Failed to upload image to Pinata");
 
-        const data = await response.json();
-        return data.url; // URL to access the image from IPFS
-    };
+    const data = await response.json();
+    return data.url; // URL to access the image from IPFS
+  };
 
-    const onDropCollection = useCallback(async (acceptedFiles: File[]) => {
-        const file = acceptedFiles[0];
-        if (!file) return;
+  const onDropCollection = useCallback(async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (!file) return;
 
-        const url = await handleUploadToPinata(file);
-        setCollectionImageFile(file);
-        setCollectionPreview(url);
-    }, []);
+    const url = await handleUploadToPinata(file);
+    setCollectionImageFile(file);
+    setCollectionPreview(url);
+  }, []);
 
-    const onDropCnft = useCallback(async (acceptedFiles: File[]) => {
-        const file = acceptedFiles[0];
-        if (!file) return;
+  const onDropCnft = useCallback(async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (!file) return;
 
-        const url = await handleUploadToPinata(file);
-        setCnftImageFile(file);
-        setCnftPreview(url);
-    }, []);
+    const url = await handleUploadToPinata(file);
+    setCnftImageFile(file);
+    setCnftPreview(url);
+  }, []);
 
-    const mintCNFT = async () => {
-        try {
-            if (!wallet || !publicKey || !connected || !publicKey) {
-                throw new Error("Wallet not connected.");
-            }
+  const mintCNFT = async () => {
+    try {
+      if (!wallet || !publicKey || !connected || !publicKey) {
+        throw new Error("Wallet not connected.");
+      }
 
-            if (!collectionPreview || !cnftPreview) {
-                throw new Error("Please upload both collection and CNFT images.");
-            }
+      if (!collectionPreview || !cnftPreview) {
+        throw new Error("Please upload both collection and CNFT images.");
+      }
 
-            setIsUploading(true);
-            if (!wallet) {
-                console.error("Wallet not connected");
-                return;
-            }
+      setIsUploading(true);
+      if (!wallet) {
+        console.error("Wallet not connected");
+        return;
+      }
+      await makePaymet();
 
-            const metadata = {
-                name: nftName,
-                symbol: nftSymbol,
-                description: nftDescription,
-                image: cnftPreview, // IPFS link
-                collection_image: collectionPreview, // optional
-                attributes: [],
-                properties: {},
-            }
-            const metadataUrl = await uploadMetadataToPinata(metadata);
-            const platformWalletAddress = process.env.NEXT_PUBLIC_PLATFORM_WALLET_ADDRESS!;
-            console.log(metadata);
-            const result = await createCnft(
-                wallet.adapter,
-                metadataUrl,
-                platformWalletAddress
-            );
-            toast("CNFT minted successfully!", {
-                description: "Your CNFT has been minted successfully.",
-                action: {
-                    label: "Close",
-                    onClick: () => console.log("Closed"),
-                }
-            })
-            console.log("CNFT Minted:", result);
-            const { collectionMint, merkleTree, collectionMetadata, collectionMasterEdition } = result;
-            const data = await createDrop({
-                metadata_url: metadataUrl,
-                collection_mint: collectionMint.toString(),
-                merkle_tree: merkleTree.toString(),
-                creator_address: publicKey.toString(),
-                collection_metadata: collectionMetadata.toString(),
-                collection_master_edition: collectionMasterEdition.toString(),
-                name: nftName,
-            });
-            if (!data) {
-                toast.error("Drop creation failed");
-                return;
-            } else {
-                toast.success("Drop created successfully!");
-                console.log(data);
-            }
-            const linkToClaim = `${window.location.origin}/claim/${data.id}`;
-            setClaimLink(linkToClaim);
-        } catch (error) {
-            console.error("Minting error:", error);
-        } finally {
-            setIsUploading(false);
+      const metadata = {
+        name: nftName,
+        symbol: nftSymbol,
+        description: nftDescription,
+        image: cnftPreview, // IPFS link
+        collection_image: collectionPreview, // optional
+        attributes: [],
+        properties: {},
+      }
+      const metadataUrl = await uploadMetadataToPinata(metadata);
+      const platformWalletAddress = process.env.NEXT_PUBLIC_PLATFORM_WALLET_ADDRESS!;
+      console.log(metadata);
+      const result = await createCnft(
+        wallet.adapter,
+        metadataUrl,
+        platformWalletAddress
+      );
+      toast("CNFT minted successfully!", {
+        description: "Your CNFT has been minted successfully.",
+        action: {
+          label: "Close",
+          onClick: () => console.log("Closed"),
         }
-    };
+      })
+      console.log("CNFT Minted:", result);
+      const { collectionMint, merkleTree, collectionMetadata, collectionMasterEdition } = result;
+      const data = await createDrop({
+        metadata_url: metadataUrl,
+        collection_mint: collectionMint.toString(),
+        merkle_tree: merkleTree.toString(),
+        creator_address: publicKey.toString(),
+        collection_metadata: collectionMetadata.toString(),
+        collection_master_edition: collectionMasterEdition.toString(),
+        name: nftName,
+      });
+      if (!data) {
+        toast.error("Drop creation failed");
+        return;
+      } else {
+        toast.success("Drop created successfully!");
+        console.log(data);
+      }
+      const linkToClaim = `${window.location.origin}/claim/${data.id}`;
+      setClaimLink(linkToClaim);
+    } catch (error) {
+      console.error("Minting error:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
-    const {
-        getRootProps: getRootCollectionProps,
-        getInputProps: getInputCollectionProps,
-    } = useDropzone({
-        onDrop: onDropCollection,
-        accept: { "image/*": [] },
-        maxFiles: 1,
-    });
+  const {
+    getRootProps: getRootCollectionProps,
+    getInputProps: getInputCollectionProps,
+  } = useDropzone({
+    onDrop: onDropCollection,
+    accept: { "image/*": [] },
+    maxFiles: 1,
+  });
 
-    const {
-        getRootProps: getRootCnftProps,
-        getInputProps: getInputCnftProps,
-    } = useDropzone({
-        onDrop: onDropCnft,
-        accept: { "image/*": [] },
-        maxFiles: 1,
-    });
+  const {
+    getRootProps: getRootCnftProps,
+    getInputProps: getInputCnftProps,
+  } = useDropzone({
+    onDrop: onDropCnft,
+    accept: { "image/*": [] },
+    maxFiles: 1,
+  });
 
-    return (
-        <div>
-            <h1 className="text-7xl font-bold px-6 text-center my-16 mb-6 bg-gradient-to-r from-violet-500 to-indigo-500 text-transparent bg-clip-text py-2 ">
-                Creator Dashboard
-            </h1>
-            <div className="max-w-4xl mx-auto  my-16">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200 px-4 py-10"> <h1 className="text-5xl sm:text-6xl font-bold text-center bg-gradient-to-r from-indigo-500 to-purple-500 text-transparent bg-clip-text mb-12"> Creator Dashboard </h1>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-purple-200">
+        {/* Image Uploads */} <div className="space-y-8">
+          {/* Collection Image Upload */} <div>
+            <h2 className="text-lg font-semibold text-purple-800 mb-2">Upload Collection Image</h2>
+            <div {...getRootCollectionProps()} className="border-2 border-dashed border-purple-300 bg-white/60 rounded-xl p-6 text-center cursor-pointer hover:border-purple-400 transition" >
+              <input {...getInputCollectionProps()} /> {collectionPreview ? (<img src={collectionPreview} alt="Collection Preview" className="w-full h-48 object-contain rounded-lg" />) : (<p className="text-purple-500">Drag & drop or click to select</p>)}
+            </div>
+          </div>
+          {/* CNFT Image Upload */}
+          <div>
+            <h2 className="text-lg font-semibold text-purple-800 mb-2">Upload cNFT Image</h2>
+            <div
+              {...getRootCnftProps()}
+              className="border-2 border-dashed border-purple-300 bg-white/60 rounded-xl p-6 text-center cursor-pointer hover:border-purple-400 transition"
+            >
+              <input {...getInputCnftProps()} />
+              {cnftPreview ? (
+                <img
+                  src={cnftPreview}
+                  alt="CNFT Preview"
+                  className="w-full h-48 object-contain rounded-lg"
+                />
+              ) : (
+                <p className="text-purple-500">Drag & drop or click to select</p>
+              )}
+            </div>
+          </div>
+        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
-                    {/* Image upload section */}
-                    <div className="space-y-6 ">
-                        <div>
-                            <h2 className="text-lg font-semibold text-white">Upload Collection Image</h2>
-                            <div
-                                {...getRootCollectionProps()}
-                                className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer"
-                            >
-                                <input {...getInputCollectionProps()} />
-                                {collectionPreview ? (
-                                    <img
-                                        src={collectionPreview}
-                                        alt="Collection Preview"
-                                        className="w-full h-48 object-contain rounded-lg"
-                                    />
-                                ) : (
-                                    <p className="text-gray-500">Drag & drop or click to select</p>
-                                )}
-                            </div>
-                        </div>
+        {/* Form + Mint */}
+        <div className="space-y-5">
+          <input
+            type="text"
+            placeholder="NFT Name"
+            value={nftName}
+            onChange={(e) => setNftName(e.target.value)}
+            className="w-full p-3 rounded-xl bg-purple-50 text-gray-800 placeholder-purple-400 border border-purple-200 focus:ring-2 focus:ring-indigo-300"
+          />
+          <input
+            type="text"
+            placeholder="NFT Symbol"
+            value={nftSymbol}
+            onChange={(e) => setNftSymbol(e.target.value)}
+            className="w-full p-3 rounded-xl bg-purple-50 text-gray-800 placeholder-purple-400 border border-purple-200 focus:ring-2 focus:ring-indigo-300"
+          />
+          <textarea
+            placeholder="NFT Description"
+            value={nftDescription}
+            onChange={(e) => setNftDescription(e.target.value)}
+            className="w-full p-3 h-32 rounded-xl bg-purple-50 text-gray-800 placeholder-purple-400 border border-purple-200 focus:ring-2 focus:ring-indigo-300"
+          />
+          <button
+            onClick={mintCNFT}
+            disabled={isUploading || !collectionPreview || !cnftPreview}
+            className={`w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300 ${isUploading || !collectionPreview || !cnftPreview
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:from-indigo-600 hover:to-purple-600"
+              }`}
+          >
+            {isUploading ? "Minting cNFT..." : "Mint cNFT"}
+          </button>
 
-                        <div>
-                            <h2 className="text-lg font-semibold text-white">Upload CNFT Image</h2>
-                            <div
-                                {...getRootCnftProps()}
-                                className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer"
-                            >
-                                <input {...getInputCnftProps()} />
-                                {cnftPreview ? (
-                                    <img
-                                        src={cnftPreview}
-                                        alt="CNFT Preview"
-                                        className="w-full h-48 object-contain rounded-lg"
-                                    />
-                                ) : (
-                                    <p className="text-gray-500">Drag & drop or click to select</p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+          {claimLink && (
+            <div className="mt-6 p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl space-y-2">
+              <p className="font-semibold">🎉 Drop created successfully!</p>
+              <p>
+                Share this claim link:{" "}
+                <a href={claimLink} target="_blank" rel="noopener noreferrer" className="underline text-green-600">
+                  {claimLink}
+                </a>
+              </p>
+              <button
+                onClick={() => navigator.clipboard.writeText(claimLink)}
+                className="text-sm text-green-700 underline"
+              >
+                📋 Copy Link
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
 
-                    {/* Form + Mint */}
-                    <div className="space-y-4">
-                        <input
-                            type="text"
-                            placeholder="NFT Name"
-                            value={nftName}
-                            onChange={(e) => setNftName(e.target.value)}
-                            className="w-full p-3 border rounded-lg text-gray-500 outline-none focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white/5 backdrop-blur-sm"
-                        />
-                        <input
-                            type="text"
-                            placeholder="NFT Symbol"
-                            value={nftSymbol}
-                            onChange={(e) => setNftSymbol(e.target.value)}
-                            className="w-full p-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white/5 backdrop-blur-sm"
-                        />
-                        <textarea
-                            placeholder="NFT Description"
-                            value={nftDescription}
-                            onChange={(e) => setNftDescription(e.target.value)}
-                            className="w-full p-3 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white/5 backdrop-blur-sm h-32"
-                        />
-                        <button
-                            onClick={mintCNFT}
-                            disabled={isUploading || !collectionPreview || !cnftPreview}
-                            className={`w-full bg-gradient-to-r  from-violet-500 to-indigo-500 text-white p-3 rounded-lg transition-all duration-300 ${isUploading ? "opacity-50 cursor-not-allowed" : "hover:from-violet-600 hover:to-indigo-600"
-                                }`}
-                        >
-                            {isUploading ? "Minting CNFT..." : "Mint CNFT"}
-                        </button>
-                    </div>
-                </div>
-                {claimLink && (
-                    <div className="mt-4 p-4 bg-green-100 rounded">
-                        <p>🎉 Drop created successfully!</p>
-                        <p>
-                            Share this claim link:{" "}
-                            <a href={claimLink} target="_blank" className="text-blue-600 underline">
-                                {claimLink}
-                            </a>
-                        </p>
-                        <button onClick={() => navigator.clipboard.writeText(claimLink)}>
-                            📋 Copy Link
-                        </button>
-                    </div>
-                )}
-
-            </div></div>
-    );
+  );
 }

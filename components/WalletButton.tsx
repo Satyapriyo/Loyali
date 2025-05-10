@@ -65,7 +65,7 @@ export default function WalletButton() {
     }
 
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center h-4 gap-3">
             <WalletMultiButtonDynamic
                 className={cn(
                     "relative !bg-gradient-to-r !from-violet-500 !to-indigo-500",

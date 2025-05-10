@@ -1,0 +1,108 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import { getActiveDrops } from "@/lib/db";
+
+interface Drop {
+    id: string;
+    metadataUrl: string;
+}
+
+interface Metadata {
+    name: string;
+    description: string;
+    image: string;
+}
+
+const DropsPage = () => {
+    const [drops, setDrops] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [metadata, setMetadata] = useState<{ [key: string]: Metadata }>({});
+
+    useEffect(() => {
+        const fetchDrops = async () => {
+            try {
+                // Get active drops
+                const Drop = await getActiveDrops();
+                setDrops(Drop); // Set drops
+                console.log(Drop);
+            } catch (err) {
+                console.error("Failed to fetch drops", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDrops();
+    }, []);
+
+    useEffect(() => {
+        const fetchMetadata = async () => {
+            const metadataPromises = drops.map(async (drop) => {
+                try {
+                    const metadataRes = await fetch(drop.metadata_url);
+                    const metadataData: Metadata = await metadataRes.json();
+                    return { [drop.id]: metadataData };
+                } catch (error) {
+                    console.error(`Failed to fetch metadata for drop ${drop.id}`, error);
+                    return { [drop.id]: { name: "Unknown", description: "Failed to load", image: "" } };
+                }
+            });
+
+            const metadataResults = await Promise.all(metadataPromises);
+            const metadataObject = Object.assign({}, ...metadataResults);
+            setMetadata(metadataObject);
+        };
+
+        if (drops.length > 0) {
+            fetchMetadata();
+        }
+    }, [drops]);
+
+    return (
+        <div className="p-6 space-y-6 max-w-4xl mx-auto">
+            <h1 className="text-3xl font-bold">Active Drops</h1>
+            {loading ? (
+                <div className="space-y-4">
+                    {[...Array(3)].map((_, i) => (
+                        <Skeleton key={i} className="h-32 w-full rounded-xl" />
+                    ))}
+                </div>
+            ) : drops.length === 0 ? (
+                <p className="text-muted-foreground">No active drops available.</p>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {drops.map((drop) => {
+                        const dropMetadata = metadata[drop.id];
+                        return (
+                            <Card key={drop.id} className="flex flex-col justify-between">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">{dropMetadata?.name || "Loading..."}</CardTitle>
+                                    <CardDescription className="text-sm">{dropMetadata?.description || "Loading..."}</CardDescription>
+                                </CardHeader>
+                                <div className="flex justify-center mt-4">
+                                    <img
+                                        src={dropMetadata?.image || "/default-image.png"}
+                                        alt={dropMetadata?.name || "Drop Image"}
+                                        className="w-32 h-32 object-cover rounded-lg"
+                                    />
+                                </div>
+                                <CardContent className="flex justify-between items-center pt-4">
+                                    <Link href={`/claim/${drop.id}`}>
+                                        <Button className="bg-purple-400 text-white hover:bg-purple-300 cursor-pointer">Claim</Button>
+                                    </Link>
+                                </CardContent>
+                            </Card>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default DropsPage;

@@ -1,48 +1,76 @@
-// components/Footer.tsx
-import { Github, Twitter, Mail } from "lucide-react"
-import Link from "next/link"
+import React from 'react';
+import { Twitter, Facebook, Instagram, Linkedin } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Footer() {
+const Footer = () => {
     return (
-        <footer className="bg-gradient-to-t from- mt-10 to-violet-900 text-gray-300 py-10 px-6">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                {/* Logo / About */}
-                <div>
-                    <h2 className="text-xl font-bold text-white">YourNFTPlatform</h2>
-                    <p className="mt-2 text-sm text-gray-400">Empowering creators and collectors with Solana NFTs & cNFTs.</p>
-                </div>
+        <footer className="bg-slate-900 text-white py-12">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    {/* Brand Column */}
+                    <div className="col-span-1 md:col-span-1">
+                        <Link href="/" className="inline-block mb-4">
+                            <span className="text-2xl font-bold bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Loyali</span>
+                        </Link>
+                        <p className="text-slate-300 mb-4">
+                            Reward your community with on-chain loyalty badges powered by Solana cNFTs.
+                        </p>
+                        <div className="flex space-x-4">
+                            <Link href="#" className="text-slate-300 hover:text-white transition-colors">
+                                <Twitter size={20} />
+                            </Link>
+                            <Link href="#" className="text-slate-300 hover:text-white transition-colors">
+                                <Facebook size={20} />
+                            </Link>
+                            <Link href="#" className="text-slate-300 hover:text-white transition-colors">
+                                <Instagram size={20} />
+                            </Link>
+                            <Link href="#"  className="text-slate-300 hover:text-white transition-colors">
+                                <Linkedin size={20} />
+                            </Link>
+                        </div>
+                    </div>
 
-                {/* Navigation */}
-                <div className="space-y-2">
-                    <h3 className="text-white font-semibold mb-2">Quick Links</h3>
-                    <ul className="space-y-1 text-sm">
-                        <li><Link href="/" className="hover:text-violet-400 transition">Home</Link></li>
-                        <li><Link href="/mint" className="hover:text-violet-400 transition">Mint NFT</Link></li>
-                        <li><Link href="/faq" className="hover:text-violet-400 transition">FAQ</Link></li>
-                        <li><Link href="/about" className="hover:text-violet-400 transition">About Us</Link></li>
-                    </ul>
-                </div>
+                    {/* Quick Links */}
+                    <div>
+                        <h3 className="font-semibold text-lg mb-4">Product</h3>
+                        <ul className="space-y-2">
+                            <li><Link href="#features" className="text-slate-300 hover:text-white transition-colors">Features</Link></li>
+                            <li><Link href="#how-it-works" className="text-slate-300 hover:text-white transition-colors">How It Works</Link></li>
+                            <li><Link href="#pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link></li>
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Roadmap</Link></li>
+                        </ul>
+                    </div>
 
-                {/* Socials */}
-                <div>
-                    <h3 className="text-white font-semibold mb-2">Connect with Us</h3>
-                    <div className="flex space-x-4">
-                        <Link href="https://twitter.com" target="_blank" className="hover:text-violet-400">
-                            <Twitter />
-                        </Link>
-                        <Link href="https://github.com" target="_blank" className="hover:text-violet-400">
-                            <Github />
-                        </Link>
-                        <Link href="mailto:support@example.com" className="hover:text-violet-400">
-                            <Mail />
-                        </Link>
+                    {/* Resources */}
+                    <div>
+                        <h3 className="font-semibold text-lg mb-4">Resources</h3>
+                        <ul className="space-y-2">
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Documentation</Link></li>
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Guides</Link></li>
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">FAQs</Link></li>
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Support</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Legal */}
+                    <div>
+                        <h3 className="font-semibold text-lg mb-4">Legal</h3>
+                        <ul className="space-y-2">
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Privacy Policy</Link></li>
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Terms of Service</Link></li>
+                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Cookie Policy</Link></li>
+                        </ul>
                     </div>
                 </div>
-            </div>
 
-            <div className="mt-8 text-center text-sm text-gray-500">
-                © {new Date().getFullYear()} YourNFTPlatform. All rights reserved.
+                <div className="pt-8 border-t border-slate-800 text-slate-400 text-sm flex flex-col md:flex-row justify-between">
+                    <p>© {new Date().getFullYear()} Loyali. All rights reserved.</p>
+                    <p>Built with ❤️ for the Solana community</p>
+                </div>
             </div>
         </footer>
-    )
-}
+    );
+};
+
+export default Footer;

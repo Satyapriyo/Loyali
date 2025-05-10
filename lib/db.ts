@@ -44,6 +44,24 @@ export async function createDrop({
   return data;
 }
 
+export const getActiveDrops = async () => {
+  try {
+    // Query for active drops only
+
+    const { data, error } = await supabase
+      .from("drops")
+      .select("id, metadata_url");
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching active drops:", error);
+    return [];
+  }
+};
 export async function getDrop(dropId: string) {
   const { data, error } = await supabase
     .from("drops")

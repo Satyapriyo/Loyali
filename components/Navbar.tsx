@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import WalletButton from "./WalletButton";
 
 import { useTheme } from 'next-themes'
@@ -34,6 +33,7 @@ export default function Navbar() {
                         <Link href="/" className="  transition-colors duration-200 text-sm font-medium">Home</Link>
                         <Link href="/dashboard" className=" transition-colors duration-200 text-sm font-medium">Dashboard</Link>
                         <Link href="/rewards" className="  transition-colors duration-200 text-sm font-medium">Rewards</Link>
+                        <Link href="/claim" className="  transition-colors duration-200 text-sm font-medium">Claim NFTs</Link>
                     </div>
 
                     {/* CTA Buttons */}

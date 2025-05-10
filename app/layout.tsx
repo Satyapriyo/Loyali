@@ -6,6 +6,7 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from "@/components/ui/sonner"
+import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +24,8 @@ export default function RootLayout({
           <Suspense fallback={<div>Loading wallet...</div>}>
             <WalletProviders>
               <div className="min-h-screen">
-                <Navbar />
+                {/* <Navbar /> */}
+                <Header />
                 <main className="pt-20">
                   {children}
                   <Toaster />
