@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 const CtaSection = () => {
     return (
@@ -16,13 +17,16 @@ const CtaSection = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <Button size="lg" className="bg-white text-loyali-primary hover:bg-loyali-light">
-                            Create a Drop
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                            Claim a Badge
-                        </Button>
+                        <Link href="/dashboard">
+                            <Button size="lg" className="bg-white text-loyali-primary cursor-pointer hover:bg-loyali-light">
+                                Create a Drop
+                                <ArrowRight className="ml-2 h-5 w-5" />
+                            </Button>
+                        </Link>
+                        <Link href="/claim">
+                            <Button size="lg" variant="outline" className="border-white cursor-pointer text-white hover:bg-white/10">
+                                Claim a Badge
+                            </Button></Link>
                     </div>
                 </div>
             </div>

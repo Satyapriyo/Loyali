@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 const Hero = () => {
     return (
@@ -19,13 +20,16 @@ const Hero = () => {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <Button size="lg" className="bg-loyali-primary hover:bg-loyali-secondary text-white">
-                                Create a Drop
-                                <ArrowRight className="ml-2 h-5 w-5" />
-                            </Button>
-                            <Button size="lg" variant="outline" className="border-loyali-primary text-loyali-primary hover:bg-loyali-primary hover:text-white">
-                                Claim a Badge
-                            </Button>
+                            <Link href="/dashboard">
+                                <Button size="lg" className="bg-loyali-primary cursor-pointer hover:bg-loyali-secondary text-white">
+                                    Create a Drop
+                                    <ArrowRight className="ml-2 h-5 w-5" />
+                                </Button></Link>
+                            <Link href="/claim">
+                                <Button size="lg" variant="outline" className="border-loyali-primary cursor-pointer text-loyali-primary hover:bg-loyali-primary hover:text-white">
+                                    Claim a Badge
+                                </Button>
+                            </Link>
                         </div>
                     </div>
 

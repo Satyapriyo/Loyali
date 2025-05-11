@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import Link from 'next/link';
 
 const StepCard = ({ number, title, description }: { number: number, title: string, description: string }) => {
     return (
@@ -60,9 +61,11 @@ const HowItWorks = () => {
                     </div>
 
                     <div className="text-center">
-                        <Button size="lg" className="bg-loyali-primary hover:bg-loyali-secondary text-white">
-                            Create Your First Drop
-                        </Button>
+                        <Link href="/dashboard">
+                            <Button size="lg" className="bg-loyali-primary cursor-pointer hover:bg-loyali-secondary text-white">
+                                Create Your First Drop
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
