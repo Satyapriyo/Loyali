@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Loyali 🪙
 
-## Getting Started
+Loyali is a no-code loyalty drop platform built on Solana using compressed NFTs (cNFTs). It enables creators to mint and distribute loyalty rewards to their fans — seamlessly, securely, and at scale.
 
-First, run the development server:
+## 🌟 Features
+
+- 🎨 **No-code NFT creation**  
+  Easily upload artwork and metadata to create loyalty badges with zero code.
+
+- 🪙 **Compressed NFTs (cNFTs)**  
+  Mint at scale with reduced costs using Solana’s state compression technology.
+
+- 🔐 **Secure wallet integration**  
+  Built with `@solana/wallet-adapter` to ensure safe and easy wallet connections.
+
+- ⚡ **Fast & Cheap**  
+  Mint 1 million cNFTs for just a few SOL — perfect for viral campaigns and massive fanbases.
+
+- 🌲 **Merkle Tree-based Drops**  
+  Scalable architecture for claimable rewards.
+
+## 🚀 How It Works
+
+1. **Creators create a drop** by uploading metadata and setting the max supply.
+2. A **collection NFT** and **Merkle tree** are initialized on-chain.
+3. **Fans claim** their cNFTs via a simple wallet connect interface.
+4. First-come, first-served — no whitelist needed!
+
+## 🛠️ Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Solana](https://solana.com/)
+- [Umi SDK](https://docs.metaplex.com/umi/)
+- [mpl-bubblegum](https://github.com/metaplex-foundation/mpl-bubblegum)
+- [Pinata](https://www.pinata.cloud/) for media & metadata hosting
+- [Supabase](https://supabase.com/) for drop metadata & claim tracking
+
+## 📦 Getting Started
+
+Clone the repo:
 
 ```bash
+git clone https://github.com/Satyapriyo/Loyali.git
+cd Loyali
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
