@@ -11,7 +11,7 @@ import ForWhoSection from '@/components/ForWhoSection';
 import CtaSection from '@/components/CtaSection';
 
 import Footer from "@/components/Footer";
-import FaqSection from '@/components/FaqSection';
+
 export default function Home() {
   return (
     <>
@@ -25,7 +25,7 @@ export default function Home() {
 
 
         <CtaSection />
-        <FaqSection />
+
         <Footer />
       </div>
     </>
