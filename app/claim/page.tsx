@@ -64,7 +64,7 @@ const DropsPage = () => {
     }, [drops]);
 
     return (
-        <div className="w-[99vw] bg-gradient-to-r from-purple-100 to-purple-200 -mt-4 pt-4 ">
+        <div className="w-[99vw] bg-gradient-to-r from-purple-100 to-purple-200 -mt-4 pt-4 min-h-screen ">
             <div className="p-6 space-y-6 max-w-4xl mx-auto">
                 <h1 className="text-3xl font-bold mt-10 bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Active Drops</h1>
                 {loading ? (
