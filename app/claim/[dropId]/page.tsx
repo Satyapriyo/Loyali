@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 
 export default function ClaimPage() {
   const { wallet, connected, publicKey } = useWallet();
@@ -66,7 +65,7 @@ export default function ClaimPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200 text-gray-900 p-6 flex flex-col items-center justify-center"> <div className="w-full max-w-xl bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-purple-200">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200 text-gray-900 p-6 flex flex-col items-center justify-center -mt-4 "> <div className="w-full max-w-xl bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-purple-200">
       <h1 className="text-3xl font-bold mb-4 text-center text-purple-800">🎁 Claim Your cNFT</h1>
 
       {!connected && (

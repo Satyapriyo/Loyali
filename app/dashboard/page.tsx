@@ -5,11 +5,11 @@ import { useDropzone } from "react-dropzone";
 import { createCnft } from "@/lib/umi";
 import { toast } from "sonner"
 import { createDrop } from "@/lib/db";
-import Image from "next/image";
+
 import { PublicKey, Transaction, SystemProgram, Connection } from '@solana/web3.js';
-import {
-  publicKey as umiPublicKey
-} from "@metaplex-foundation/umi";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/Spinner";
+
 
 export default function Dashboard() {
   const { publicKey, sendTransaction, signTransaction, connected, wallet } = useWallet();
@@ -26,10 +26,11 @@ export default function Dashboard() {
   const [quantity, setQuantity] = useState(1);
   const [isApproved, setIsApproved] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUploadings, setIsUploadings] = useState(false);
 
   const makePaymet = async () => {
     if (!publicKey) {
-      alert('Connect your wallet first.');
+      toast.error('Connect your wallet first.');
       throw new Error('Wallet not connected.');
     }
 
@@ -43,7 +44,7 @@ export default function Dashboard() {
       const latestBlockhash = await connection.getLatestBlockhash();
 
       // Estimate 0.005 SOL per NFT
-      const lamportsPerNFT = 30000.0; // 0.00003 SOL in lamports
+      const lamportsPerNFT = 100_000; //  0.0001 SOL = 1000000000 lamports
       const totalLamports = quantity * lamportsPerNFT;
 
       const tx = new Transaction({
@@ -58,7 +59,7 @@ export default function Dashboard() {
       );
 
       if (!signTransaction) {
-        alert('Wallet is not connected properly. Please reconnect.');
+        toast.error('Wallet is not connected properly. Please reconnect.')
         throw new Error('signTransaction not available.');
       }
 
@@ -77,16 +78,16 @@ export default function Dashboard() {
 
       if (confirmation.value.err) {
         console.error('Transaction failed:', confirmation.value.err);
-        alert('Payment transaction failed.');
+        toast.error('Payment transaction failed.')
         throw new Error('Payment failed');
       }
 
       console.log('Funding transaction confirmed. Tx ID:', txId);
       setIsApproved(true);
-      alert(`Platform funded with ${(totalLamports / 1e9).toFixed(4)} SOL successfully!`);
+      toast.success(`Platform funded with ${(totalLamports / 1e9).toFixed(6)} SOL successfully!`)
     } catch (error) {
       console.error('Error during funding/approval:', error);
-      alert('Failed to approve and fund the platform wallet.');
+      toast.error('Failed to approve and fund the platform wallet.')
       throw error; // rethrow so mintCNFT() can catch it
     } finally {
       setApproving(false);
@@ -127,19 +128,22 @@ export default function Dashboard() {
   const onDropCollection = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
-
+    setIsUploadings(true);
     const url = await handleUploadToPinata(file);
     setCollectionImageFile(file);
     setCollectionPreview(url);
+    setIsUploadings(false);
   }, []);
 
   const onDropCnft = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
+    setIsUploading(true);
 
     const url = await handleUploadToPinata(file);
     setCnftImageFile(file);
     setCnftPreview(url);
+    setIsUploading(false);
   }, []);
 
   const mintCNFT = async () => {
@@ -176,13 +180,13 @@ export default function Dashboard() {
         metadataUrl,
         platformWalletAddress
       );
-      toast("CNFT minted successfully!", {
-        description: "Your CNFT has been minted successfully.",
-        action: {
-          label: "Close",
-          onClick: () => console.log("Closed"),
-        }
-      })
+      // toast("CNFT minted successfully!", {
+      //   description: "Your CNFT has been minted successfully.",
+      //   action: {
+      //     label: "Close",
+      //     onClick: () => console.log("Closed"),
+      //   }
+      // })
       console.log("CNFT Minted:", result);
       const { collectionMint, merkleTree, collectionMetadata, collectionMasterEdition } = result;
       const data = await createDrop({
@@ -233,14 +237,25 @@ export default function Dashboard() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-purple-200">
         {/* Image Uploads */} <div className="space-y-8">
           {/* Collection Image Upload */} <div>
-            <h2 className="text-lg font-semibold text-purple-800 mb-2">Upload Collection Image</h2>
+            <h2 className="text-lg font-semibold text-black mb-2">Upload Collection Image</h2>
             <div {...getRootCollectionProps()} className="border-2 border-dashed border-purple-300 bg-white/60 rounded-xl p-6 text-center cursor-pointer hover:border-purple-400 transition" >
-              <input {...getInputCollectionProps()} /> {collectionPreview ? (<img src={collectionPreview} alt="Collection Preview" className="w-full h-48 object-contain rounded-lg" />) : (<p className="text-purple-500">Drag & drop or click to select</p>)}
+              <input {...getInputCollectionProps()} />
+              {collectionPreview ?
+                (<img src={collectionPreview} alt="Collection Preview" className="w-full h-48 object-contain rounded-lg" />) :
+                (
+                  isUploadings ? (
+                    <Spinner />
+                  ) : collectionPreview ? (
+                    <img src={collectionPreview} alt="Collection Preview" className="w-full h-48 object-contain rounded-lg" />
+                  ) : (
+                    <p className="text-purple-500">Drag & drop or click to select</p>
+                  )
+                )}
             </div>
           </div>
           {/* CNFT Image Upload */}
           <div>
-            <h2 className="text-lg font-semibold text-purple-800 mb-2">Upload cNFT Image</h2>
+            <h2 className="text-lg font-semibold text-black mb-2">Upload cNFT Image</h2>
             <div
               {...getRootCnftProps()}
               className="border-2 border-dashed border-purple-300 bg-white/60 rounded-xl p-6 text-center cursor-pointer hover:border-purple-400 transition"
@@ -253,33 +268,54 @@ export default function Dashboard() {
                   className="w-full h-48 object-contain rounded-lg"
                 />
               ) : (
-                <p className="text-purple-500">Drag & drop or click to select</p>
+                isUploading ? (
+                  <Spinner />
+                ) : cnftPreview ? (
+                  <img src={cnftPreview} alt="CNFT Preview" className="w-full h-48 object-contain rounded-lg" />
+                ) : (
+                  <p className="text-purple-500">Drag & drop or click to select</p>
+                )
               )}
             </div>
           </div>
         </div>
 
         {/* Form + Mint */}
-        <div className="space-y-5">
+        <div className="space-y-5 md:mt-8">
           <input
             type="text"
             placeholder="NFT Name"
             value={nftName}
             onChange={(e) => setNftName(e.target.value)}
-            className="w-full p-3 rounded-xl bg-purple-50 text-gray-800 placeholder-purple-400 border border-purple-200 focus:ring-2 focus:ring-indigo-300"
+            className="w-full p-3 rounded-xl bg-purple-50 text-gray-800 placeholder-gray-400 border border-purple-200 focus:ring-2 focus:ring-loyali-secondary"
           />
           <input
             type="text"
             placeholder="NFT Symbol"
             value={nftSymbol}
             onChange={(e) => setNftSymbol(e.target.value)}
-            className="w-full p-3 rounded-xl bg-purple-50 text-gray-800 placeholder-purple-400 border border-purple-200 focus:ring-2 focus:ring-indigo-300"
+            className="w-full p-3 rounded-xl bg-purple-50 text-gray-800 placeholder-gray-400 border border-purple-200 focus:ring-2 focus:ring-loyali-secondary"
           />
+          <input
+            type="number"
+            min={1}
+            value={quantity}
+            onChange={(e) => {
+              const parsed = parseInt(e.target.value);
+              if (!isNaN(parsed)) {
+                setQuantity(parsed);
+              }
+            }}
+            className="w-full p-3 rounded-xl bg-purple-50 text-gray-800 placeholder-purple-400 border border-purple-200 focus:ring-2 focus:ring-loyali-secondary"
+          />
+          <p className="text-sm text-gray-400">
+            Estimated cost: {(quantity * 0.0001).toFixed(6)} SOL will be paid to the platform for minting.
+          </p>
           <textarea
             placeholder="NFT Description"
             value={nftDescription}
             onChange={(e) => setNftDescription(e.target.value)}
-            className="w-full p-3 h-32 rounded-xl bg-purple-50 text-gray-800 placeholder-purple-400 border border-purple-200 focus:ring-2 focus:ring-indigo-300"
+            className="w-full p-3 h-32 rounded-xl bg-purple-50 text-gray-800 placeholder-gray-400 border border-purple-200 focus:ring-2 focus:ring-loyali-secondary"
           />
           <button
             onClick={mintCNFT}
@@ -289,11 +325,14 @@ export default function Dashboard() {
               : "hover:from-indigo-600 hover:to-purple-600"
               }`}
           >
-            {isUploading ? "Minting cNFT..." : "Mint cNFT"}
+            {isUploading ? (<div className="flex justify-center items-center gap-2">
+              <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
+              Minting...
+            </div>) : "Create Drop"}
           </button>
 
           {claimLink && (
-            <div className="mt-6 p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl space-y-2">
+            <div className="mt-1 p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl space-y-2">
               <p className="font-semibold">🎉 Drop created successfully!</p>
               <p>
                 Share this claim link:{" "}

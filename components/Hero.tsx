@@ -9,7 +9,7 @@ const Hero = () => {
                 <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                     {/* Left content */}
                     <div className="w-full md:w-1/2 space-y-6">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black">
                             Create & Share Loyalty Badges with the Power of
                             <span className="bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent"> Solana</span>
                         </h1>
