@@ -68,7 +68,7 @@ const VideoSection = () => {
                         <Progress value={progress} className="rounded-none h-1" />
 
                         <CardContent className="p-6">
-                            <h3 className="text-2xl font-semibold mb-2">How to Create Your First Loyalty Drop</h3>
+                            <h3 className="text-2xl font-semibold mb-2 text-black">How to Create Your First Loyalty Drop</h3>
                             <p className="text-slate-600">
                                 This quick walkthrough shows you the simple 4-step process to create and share your first loyalty badge with your community. No coding or technical knowledge required!
                             </p>

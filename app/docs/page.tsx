@@ -27,7 +27,7 @@ const Documentation = () => {
                             <BookOpen className="mr-2 h-4 w-4" />Get Started
                         </Button></Link>
                         <Link href="/#tutorial">
-                            <Button variant="outline" className="border-purple-200 cursor-pointer">
+                            <Button variant="outline" className="border-purple-200 text-black cursor-pointer">
                                 <ExternalLink className="mr-2 h-4 w-4" /> View Demo
                             </Button>
                         </Link>
@@ -38,10 +38,10 @@ const Documentation = () => {
             {/* Main Content */}
             <section className="max-w-5xl mx-auto pb-20 px-4">
                 <Tabs defaultValue="guide" className="w-full">
-                    <TabsList className="grid w-full grid-cols-3 mb-8">
-                        <TabsTrigger value="guide">📖 User Guide</TabsTrigger>
-                        <TabsTrigger value="faq">❓ FAQ</TabsTrigger>
-                        <TabsTrigger value="roadmap">🗺️ Roadmap</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-3 mb-8 text-black">
+                        <TabsTrigger value="guide" className="cursor-pointer">📖 User Guide</TabsTrigger>
+                        <TabsTrigger value="faq" className="cursor-pointer">❓ FAQ</TabsTrigger>
+                        <TabsTrigger value="roadmap" className="cursor-pointer">🗺️ Roadmap</TabsTrigger>
                     </TabsList>
 
                     {/* User Guide Tab */}
@@ -49,9 +49,9 @@ const Documentation = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {/* Getting Started Card */}
                             <Card className="border-purple-100 shadow-sm hover:shadow-md transition-shadow">
-                                <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
-                                    <CardTitle className="flex items-center">
-                                        <span className="text-2xl mr-2">🛠️</span> Getting Started
+                                <CardHeader className="bg-gradient-to-r text-black from-purple-50 to-blue-50 rounded-t-lg">
+                                    <CardTitle className="flex items-center text-black">
+                                        <span className="text-2xl mr-2 ">🛠️</span> Getting Started
                                     </CardTitle>
                                     <CardDescription>First steps to using Loyali</CardDescription>
                                 </CardHeader>
@@ -65,8 +65,8 @@ const Documentation = () => {
 
                             {/* Creating a Drop Card */}
                             <Card className="border-purple-100 shadow-sm hover:shadow-md transition-shadow">
-                                <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
-                                    <CardTitle className="flex items-center">
+                                <CardHeader className="bg-gradient-to-r text-black from-purple-50 to-blue-50 rounded-t-lg">
+                                    <CardTitle className="flex items-center text-black">
                                         <span className="text-2xl mr-2">🎁</span> Creating a Drop
                                     </CardTitle>
                                     <CardDescription>For Creators</CardDescription>
@@ -91,8 +91,8 @@ const Documentation = () => {
 
                             {/* Claiming a Drop Card */}
                             <Card className="border-purple-100 shadow-sm hover:shadow-md transition-shadow">
-                                <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
-                                    <CardTitle className="flex items-center">
+                                <CardHeader className="bg-gradient-to-r text-black from-purple-50 to-blue-50 rounded-t-lg">
+                                    <CardTitle className="flex items-center text-black">
                                         <span className="text-2xl mr-2">🧾</span> Claiming a Drop
                                     </CardTitle>
                                     <CardDescription>For Fans</CardDescription>
@@ -117,8 +117,8 @@ const Documentation = () => {
 
                             {/* Wallet Safety Card */}
                             <Card className="border-purple-100 shadow-sm hover:shadow-md transition-shadow">
-                                <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
-                                    <CardTitle className="flex items-center">
+                                <CardHeader className="bg-gradient-to-r text-black from-purple-50 to-blue-50 rounded-t-lg">
+                                    <CardTitle className="flex items-center text-black">
                                         <span className="text-2xl mr-2">🔐</span> Wallet Safety
                                     </CardTitle>
                                     <CardDescription>Security information</CardDescription>
@@ -135,7 +135,7 @@ const Documentation = () => {
 
                     {/* FAQ Tab */}
                     <TabsContent value="faq">
-                        <Card>
+                        <Card className=" text-black">
                             <CardHeader>
                                 <CardTitle>Frequently Asked Questions</CardTitle>
                                 <CardDescription>Common questions about using the Loyali platform</CardDescription>
@@ -184,7 +184,7 @@ const Documentation = () => {
                     {/* Roadmap Tab */}
                     <TabsContent value="roadmap">
                         <Card>
-                            <CardHeader>
+                            <CardHeader className="text-black">
                                 <CardTitle>Roadmap & Coming Soon</CardTitle>
                                 <CardDescription>What&apos;s next for the Loyali platform</CardDescription>
                             </CardHeader>

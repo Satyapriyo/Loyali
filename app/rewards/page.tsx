@@ -1,14 +1,14 @@
 "use client";
 
-import { useWallet } from "@solana/wallet-adapter-react";
+
 import { fetchUserCNFTs } from "@/lib/cnfts";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function Rewards() {
-    const { publicKey } = useWallet();
+    const { publicKey, connected } = useWallet();
     const [cnfts, setCnfts] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
 
@@ -24,6 +24,11 @@ export default function Rewards() {
     return (
         <div className="min-h-screen px-6 -mt-4 py-20 bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200">
             <div className="text-center mb-16">
+                {!connected && (
+                    <div className="text-center text-red-500 font-medium mb-4">
+                        Please connect your wallet to continue.
+                    </div>
+                )}
                 <h1 className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-violet-400 to-indigo-500 text-transparent bg-clip-text"> Your NFTs </h1>
                 <p className="text-gray-800 mt-4 text-lg"> A collection of your compressed NFTs </p> </div>
             {loading ? (
