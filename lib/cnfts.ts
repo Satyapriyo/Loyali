@@ -13,7 +13,7 @@ export const fetchUserCNFTs = async (walletAddress: string) => {
         params: {
           ownerAddress: walletAddress,
           page: 1,
-          limit: 20,
+          limit: 100,
         },
       }),
     }
