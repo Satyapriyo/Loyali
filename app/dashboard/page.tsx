@@ -234,6 +234,11 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-violet-200 px-4 -mt-2 py-12"> <h1 className="text-5xl sm:text-6xl font-bold text-center bg-gradient-to-r from-indigo-500 to-purple-500 text-transparent bg-clip-text mb-12"> Creator Dashboard </h1>
+      {!connected && (
+        <div className="text-center text-red-500 font-medium mb-4">
+          Please connect your wallet to continue.
+        </div>
+      )}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-purple-200">
         {/* Image Uploads */} <div className="space-y-8">
           {/* Collection Image Upload */} <div>

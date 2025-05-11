@@ -34,8 +34,8 @@ const Header = () => {
                     <Link href="/dashboard" className="text-slate-700 hover:text-loyali-primary transition-colors">Create Drop</Link>
                     <Link href="/rewards" className="text-slate-700 hover:text-loyali-primary transition-colors">Collections</Link>
                     <Link href="/claim" className="text-slate-700 hover:text-loyali-primary transition-colors">Claim NFTS</Link>
-                    {/* <Link href="#pricing" className="text-slate-700 hover:text-loyali-primary transition-colors">Pricing</Link>
-                    <Link href="#testimonials" className="text-slate-700 hover:text-loyali-primary transition-colors">Testimonials</Link> */}
+                    {/* {/* <Link href="#pricing" className="text-slate-700 hover:text-loyali-primary transition-colors">Pricing</Link> */}
+                    <Link href="/docs" className="text-slate-700 hover:text-loyali-primary transition-colors">Docs</Link>
                 </nav>
 
                 {/* CTA Buttons */}
@@ -46,6 +46,7 @@ const Header = () => {
                     <Button className="bg-loyali-primary hover:bg-loyali-secondary text-white">
                         Create Drop
                     </Button> */}
+                    
                     <WalletButton />
                 </div>
 
@@ -65,15 +66,16 @@ const Header = () => {
                         <Link href="/dashboard" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
                         <Link href="/rewards" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>How It Works</Link>
                         <Link href="/claim" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
-
+                        <Link href="/docs" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Docs</Link>
                     </nav>
                     <div className="flex flex-col space-y-2">
-                        <Button variant="outline" className="w-full border-loyali-primary text-loyali-primary hover:bg-loyali-primary hover:text-white">
+                        {/* <Button variant="outline" className="w-full border-loyali-primary text-loyali-primary hover:bg-loyali-primary hover:text-white">
                             Claim Badge
                         </Button>
                         <Button className="w-full bg-loyali-primary hover:bg-loyali-secondary text-white">
                             Create Drop
-                        </Button>
+                        </Button> */}
+                        <WalletButton />
                     </div>
                 </div>
             )}
@@ -82,3 +84,4 @@ const Header = () => {
 };
 
 export default Header;
+// https://github.com/Satyapriyo/Loyali

@@ -105,15 +105,15 @@ export default function WalletButton() {
                     onClick={copyAddress}
                     className={cn(
                         "p-2 rounded-lg transition-all duration-200",
-                        "bg-violet-500/10 hover:bg-violet-500/20 active:bg-violet-500/30",
+                        "bg-violet-500/10  hover:bg-violet-500/20 active:bg-violet-500/30",
                         "group/copy relative"
                     )}
                 >
                     {copied ? (
-                        <div className="text-white"> <CheckIcon /></div>
+                        <div className="text-black"> <CheckIcon /></div>
 
                     ) : (
-                        <div className="text-white"><CopyIcon /></div>
+                        <div className="text-black"><CopyIcon /></div>
                     )}
                     <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/90 text-white text-xs px-2 py-1 rounded opacity-0 group-hover/copy:opacity-100 transition-opacity duration-200">
                         {copied ? 'Copied!' : 'Copy address'}

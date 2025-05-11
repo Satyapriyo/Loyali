@@ -11,6 +11,7 @@ import ForWhoSection from '@/components/ForWhoSection';
 import CtaSection from '@/components/CtaSection';
 
 import Footer from "@/components/Footer";
+import VideoSection from '@/components/VideoSection';
 
 export default function Home() {
   return (
@@ -21,11 +22,9 @@ export default function Home() {
         <Features />
         <HowItWorks />
         <ForWhoSection />
+        <VideoSection />
         <BuildForScale />
-
-
         <CtaSection />
-
         <Footer />
       </div>
     </>

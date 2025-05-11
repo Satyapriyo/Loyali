@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from "@/components/ui/sonner"
 import Header from '@/components/Header';
+import Banner from '@/components/Banner';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,7 +27,10 @@ export default function RootLayout({
               <div className="min-h-screen">
                 {/* <Navbar /> */}
                 <Header />
+
                 <main className="pt-20">
+                  <Banner />
+                  {/* Main content */}
                   {children}
                   <Toaster />
                   <Analytics />

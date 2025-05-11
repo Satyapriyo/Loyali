@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { getActiveDrops } from "@/lib/db";
+import { useWallet } from '@solana/wallet-adapter-react';
 
 interface Drop {
     id: string;
@@ -19,6 +20,7 @@ interface Metadata {
 }
 
 const DropsPage = () => {
+    const { connected } = useWallet();
     const [drops, setDrops] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [metadata, setMetadata] = useState<{ [key: string]: Metadata }>({});
@@ -65,6 +67,11 @@ const DropsPage = () => {
 
     return (
         <div className="w-[99vw] bg-gradient-to-r from-purple-100 to-purple-200 -mt-4 pt-4 min-h-screen ">
+            {!connected && (
+                <div className="text-center text-red-500 font-medium mt-2 mb-4">
+                    Please connect your wallet to continue.
+                </div>
+            )}
             <div className="p-6 space-y-6 max-w-4xl mx-auto">
                 <h1 className="text-3xl font-bold mt-10 bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Active Drops</h1>
                 {loading ? (
