@@ -8,8 +8,22 @@ import { ThemeProvider } from 'next-themes';
 import { Toaster } from "@/components/ui/sonner"
 import Header from '@/components/Header';
 import Banner from '@/components/Banner';
+import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] })
+
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Loyali',
+    template: '%s | Loyali',
+  },
+  description: 'Loyali is a decentralized platform that empowers creators and brands to build lasting communities through loyalty rewards in the form of compressed NFTs (cNFTs) on Solana.',
+  icons: {
+    icon: '/favicon.png', // or '/favicon.png' or array of sizes if needed
+  },
+};
+
 
 export default function RootLayout({
   children,

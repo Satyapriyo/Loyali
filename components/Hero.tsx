@@ -40,7 +40,7 @@ const Hero = () => {
                             <div className="absolute inset-0 bg-gradient-to-br from-loyali-primary to-loyali-secondary rounded-3xl blur-xl opacity-20 animate-pulse-gentle" />
                             <div className="relative bg-white p-6 rounded-3xl border border-slate-200 shadow-lg animate-float">
                              <div className="aspect-square w-64 mx-auto mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-loyali-primary to-loyali-secondary flex items-center justify-center text-white text-6xl font-bold">
-                                    <Image src="/hero.png" width={200} height={200} alt='nft_image' />
+                                    <Image src="/hero.png" width={250} height={250} alt='nft_image' />
                                 </div>
                                 <div className="text-center">
                                     <h3 className="font-bold text-xl text-black">Loyali Genesis Badge</h3>
