@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 import { getActiveDrops } from "@/lib/db";
 import { useWallet } from '@solana/wallet-adapter-react';
 
@@ -75,10 +76,8 @@ const DropsPage = () => {
             <div className="p-6 space-y-6 max-w-4xl mx-auto">
                 <h1 className="text-3xl font-bold mt-10 bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Active Drops</h1>
                 {loading ? (
-                    <div className="space-y-4">
-                        {[...Array(3)].map((_, i) => (
-                            <Skeleton key={i} className="h-32 w-full rounded-xl" />
-                        ))}
+                    <div className="flex justify-center items-center h-64">
+                        <Loader2 className="h-12 w-12 animate-spin text-violet-500" />
                     </div>
                 ) : drops.length === 0 ? (
                     <p className="text-muted-foreground">No active drops available.</p>

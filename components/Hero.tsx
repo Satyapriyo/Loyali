@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Hero = () => {
     return (
@@ -38,8 +39,8 @@ const Hero = () => {
                         <div className="relative">
                             <div className="absolute inset-0 bg-gradient-to-br from-loyali-primary to-loyali-secondary rounded-3xl blur-xl opacity-20 animate-pulse-gentle" />
                             <div className="relative bg-white p-6 rounded-3xl border border-slate-200 shadow-lg animate-float">
-                                <div className="aspect-square w-64 mx-auto mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-loyali-primary to-loyali-secondary flex items-center justify-center text-white text-6xl font-bold">
-                                    L
+                             <div className="aspect-square w-64 mx-auto mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-loyali-primary to-loyali-secondary flex items-center justify-center text-white text-6xl font-bold">
+                                    <Image src="/hero.png" width={200} height={200} alt='nft_image' />
                                 </div>
                                 <div className="text-center">
                                     <h3 className="font-bold text-xl text-black">Loyali Genesis Badge</h3>
@@ -58,3 +59,7 @@ const Hero = () => {
 };
 
 export default Hero;
+
+// <div className="aspect-square w-64 mx-auto mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-loyali-primary to-loyali-secondary flex items-center justify-center text-white text-6xl font-bold">
+// L
+// </div>
