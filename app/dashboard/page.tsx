@@ -27,6 +27,7 @@ export default function Dashboard() {
   const [isApproved, setIsApproved] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isUploadings, setIsUploadings] = useState(false);
+  const [isMinting, setIsMinting] = useState(false);
 
   const makePaymet = async () => {
     if (!publicKey) {
@@ -156,7 +157,7 @@ export default function Dashboard() {
         throw new Error("Please upload both collection and CNFT images.");
       }
 
-      setIsUploading(true);
+      setIsMinting(true);
       if (!wallet) {
         console.error("Wallet not connected");
         return;
@@ -210,7 +211,7 @@ export default function Dashboard() {
     } catch (error) {
       console.error("Minting error:", error);
     } finally {
-      setIsUploading(false);
+      setIsMinting(false);
     }
   };
 
@@ -330,7 +331,7 @@ export default function Dashboard() {
               : "hover:from-indigo-600 hover:to-purple-600"
               }`}
           >
-            {isUploading ? (<div className="flex justify-center items-center gap-2">
+            {isMinting ? (<div className="flex justify-center items-center gap-2">
               <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
               Minting...
             </div>) : "Create Drop"}

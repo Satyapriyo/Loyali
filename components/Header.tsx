@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X } from 'lucide-react';
+import { Github, Menu, X } from 'lucide-react';
 import WalletButton from './WalletButton';
 import Link from 'next/link';
 
@@ -23,7 +23,7 @@ const Header = () => {
     }, []);
 
     return (
-        <header className={`fixed w-full z-50 bg-white transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'}`}>
+        <header className={`fixed w-full z-40 bg-white transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'}`}>
             <div className="container mx-auto px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center">
                     <span className="text-2xl font-bold bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Loyali</span>
@@ -39,14 +39,14 @@ const Header = () => {
                 </nav>
 
                 {/* CTA Buttons */}
-                <div className="hidden md:flex items-center space-x-4 my-2">
+                <div className="hidden md:flex items-center space-x-4 mt-2">
                     {/* <Button variant="outline" className="border-loyali-primary text-loyali-primary hover:bg-loyali-primary hover:text-white">
                         Claim Badge
                     </Button>
                     <Button className="bg-loyali-primary hover:bg-loyali-secondary text-white">
                         Create Drop
                     </Button> */}
-                    
+                    <Link href="https://github.com/Satyapriyo/Loyali"><Github /></Link>
                     <WalletButton />
                 </div>
 
@@ -75,7 +75,12 @@ const Header = () => {
                         <Button className="w-full bg-loyali-primary hover:bg-loyali-secondary text-white">
                             Create Drop
                         </Button> */}
-                        <WalletButton />
+                        <div className='flex justify-around'>
+                            <Link href="https://github.com/Satyapriyo/Loyali">
+                                <Github />
+                            </Link>
+                            <WalletButton />
+                        </div>
                     </div>
                 </div>
             )}
@@ -84,4 +89,4 @@ const Header = () => {
 };
 
 export default Header;
-// https://github.com/Satyapriyo/Loyali
+// 
