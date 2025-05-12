@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Play, Pause } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import Link from "next/link";
 
 const VideoSection = () => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -62,7 +63,7 @@ const VideoSection = () => {
                                 allowFullScreen
                             ></iframe>
 
-                            
+
                         </div>
 
                         <Progress value={progress} className="rounded-none h-1" />
@@ -76,9 +77,11 @@ const VideoSection = () => {
                     </Card>
 
                     <div className="mt-8 flex justify-center">
-                        <Button size="lg" className="bg-loyali-primary hover:bg-loyali-secondary text-white">
-                            Try It Yourself
-                        </Button>
+                        <Link href="/dashboard" className=''>
+                            <Button size="lg" className="bg-loyali-primary cursor-pointer hover:bg-loyali-secondary text-white">
+                                Try It Yourself
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>

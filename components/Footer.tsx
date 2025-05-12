@@ -35,10 +35,10 @@ const Footer = () => {
                     <div>
                         <h3 className="font-semibold text-lg mb-4">Product</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#features" className="text-slate-300 hover:text-white transition-colors">Features</Link></li>
-                            <li><Link href="#how-it-works" className="text-slate-300 hover:text-white transition-colors">How It Works</Link></li>
-                            <li><Link href="#pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link></li>
-                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Roadmap</Link></li>
+                            <li><Link href="/#features" className="text-slate-300 hover:text-white transition-colors">Features</Link></li>
+                            <li><Link href="/#how-it-works" className="text-slate-300 hover:text-white transition-colors">How It Works</Link></li>
+                            
+                            <li><Link href="/docs" className="text-slate-300 hover:text-white transition-colors">Roadmap</Link></li>
                         </ul>
                     </div>
 
@@ -46,9 +46,9 @@ const Footer = () => {
                     <div>
                         <h3 className="font-semibold text-lg mb-4">Resources</h3>
                         <ul className="space-y-2">
-                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Documentation</Link></li>
-                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Guides</Link></li>
-                            <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">FAQs</Link></li>
+                            <li><Link href="/docs" className="text-slate-300 hover:text-white transition-colors">Documentation</Link></li>
+                            <li><Link href="/docs" className="text-slate-300 hover:text-white transition-colors">Guides</Link></li>
+                            <li><Link href="/docs" className="text-slate-300 hover:text-white transition-colors">FAQs</Link></li>
                             <li><Link href="#" className="text-slate-300 hover:text-white transition-colors">Support</Link></li>
                         </ul>
                     </div>

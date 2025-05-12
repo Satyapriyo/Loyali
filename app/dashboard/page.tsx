@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useDropzone } from "react-dropzone";
 import { createCnft } from "@/lib/umi";
@@ -9,6 +9,7 @@ import { createDrop } from "@/lib/db";
 import { PublicKey, Transaction, SystemProgram, Connection } from '@solana/web3.js';
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/Spinner";
+import { useRouter } from 'next/navigation';
 
 
 export default function Dashboard() {
@@ -28,6 +29,11 @@ export default function Dashboard() {
   const [isUploading, setIsUploading] = useState(false);
   const [isUploadings, setIsUploadings] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const makePaymet = async () => {
     if (!publicKey) {
