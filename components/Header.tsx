@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Github, Menu, X } from 'lucide-react';
 import WalletButton from './WalletButton';
+
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -46,7 +48,10 @@ const Header = () => {
                     <Button className="bg-loyali-primary hover:bg-loyali-secondary text-white">
                         Create Drop
                     </Button> */}
-                    <Link href="https://github.com/Satyapriyo/Loyali"><Github /></Link>
+                    <Link href="https://github.com/Satyapriyo/Loyali">
+                        {/* <Github /> */}
+                        <Image src="/github-brands.svg" width={20} height={20} alt='giticon' />
+                    </Link>
                     <WalletButton />
                 </div>
 
@@ -75,9 +80,10 @@ const Header = () => {
                         <Button className="w-full bg-loyali-primary hover:bg-loyali-secondary text-white">
                             Create Drop
                         </Button> */}
-                        <div className='flex justify-around'>
+                        <div className='flex justify-around '>
                             <Link href="https://github.com/Satyapriyo/Loyali">
-                                <Github />
+                                <Image src="/github-brands.svg" width={20} height={20} alt='giticon' />
+
                             </Link>
                             <WalletButton />
                         </div>

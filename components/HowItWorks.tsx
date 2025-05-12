@@ -32,7 +32,7 @@ const HowItWorks = () => {
         },
         {
             title: "Share Claim Link",
-            description: "Fans claim your loyalty badge instantly. No wallet required to claim."
+            description: "Fans claim your loyalty badge instantly. No payment required to claim , no gas fees."
         }
     ];
 

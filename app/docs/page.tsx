@@ -27,7 +27,7 @@ const Documentation = () => {
                             <BookOpen className="mr-2 h-4 w-4" />Get Started
                         </Button></Link>
                         <Link href="/#tutorial">
-                            <Button variant="outline" className="border-purple-200 text-black cursor-pointer">
+                            <Button variant="outline" className="border-purple-200 hover:text-black text-black cursor-pointer">
                                 <ExternalLink className="mr-2 h-4 w-4" /> View Demo
                             </Button>
                         </Link>
