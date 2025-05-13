@@ -43,7 +43,7 @@ const VideoSection = () => {
         <section className="py-20 bg-gradient-to-b from-white to-loyali-light" id="tutorial">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black">
                         See <span className="bg-gradient-to-r from-loyali-primary to-loyali-secondary bg-clip-text text-transparent">Loyali</span> in Action
                     </h2>
                     <p className="text-xl text-slate-600 max-w-3xl mx-auto">

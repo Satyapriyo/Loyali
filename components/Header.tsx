@@ -68,9 +68,9 @@ const Header = () => {
             {isMobileMenuOpen && (
                 <div className="md:hidden bg-white shadow-lg absolute w-full py-4 px-4 animate-slide-up">
                     <nav className="flex flex-col space-y-4 mb-4">
-                        <Link href="/dashboard" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
-                        <Link href="/rewards" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>How It Works</Link>
-                        <Link href="/claim" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
+                        <Link href="/dashboard" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Create Drop</Link>
+                        <Link href="/rewards" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Collections</Link>
+                        <Link href="/claim" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Claim NFTS</Link>
                         <Link href="/docs" className="text-slate-700 hover:text-loyali-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Docs</Link>
                     </nav>
                     <div className="flex flex-col space-y-2">
