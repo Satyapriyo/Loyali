@@ -105,7 +105,7 @@ const Documentation = () => {
                                         </li>
                                         <li className="flex items-start">
                                             <span className="text-purple-600 font-bold mr-2">2.</span>
-                                            <span><strong className="text-purple-700">Connect Wallet:</strong> Make sure you&apos;re on devnet or mainnet.</span>
+                                            <span><strong className="text-purple-700">Connect Wallet:</strong> Make sure you&apos;re on devnet .</span>
                                         </li>
                                         <li className="flex items-start">
                                             <span className="text-purple-600 font-bold mr-2">3.</span>
