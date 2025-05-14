@@ -1,12 +1,11 @@
 import { Suspense } from 'react';
-import { WalletProviders } from "@/app/WalletProvider"
+import { WalletProviders } from '@/providers/WalletProvider';
 import { Inter } from 'next/font/google';
-
+import Navbar from '@/components/Navbar';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from "@/components/ui/sonner"
-
 import Header from '@/components/Header';
 import Banner from '@/components/Banner';
 import type { Metadata } from 'next';
@@ -42,6 +41,7 @@ export default function RootLayout({
               <div className="min-h-screen">
                 {/* <Navbar /> */}
                 <Header />
+
                 <main className="pt-20">
                   <Banner />
                   {/* Main content */}
@@ -50,9 +50,7 @@ export default function RootLayout({
                   <Analytics />
                 </main>
               </div>
-
             </WalletProviders>
-
           </Suspense>
         </ThemeProvider>
 
