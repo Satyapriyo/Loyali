@@ -1,9 +1,9 @@
 import React from 'react';
-import { Zap, Shield, Package, Award, DollarSign } from 'lucide-react';
+import { Zap, Shield, Package, Award, DollarSign, Layers } from 'lucide-react';
 
 const FeatureCard = ({ icon: Icon, title, description }: { icon: any, title: string, description: string }) => {
     return (
-        <div className="feature-card shadow-md p-4">
+        <div className="feature-card shadow-md p-4 hover:scale-105 duration-300 hover:shadow-lg hover:cursor-pointer">
             <div className="mb-5 inline-block p-3 rounded-lg bg-loyali-light">
                 <Icon className="h-6 w-6 text-loyali-primary" />
             </div>
@@ -39,6 +39,11 @@ const Features = () => {
             icon: DollarSign,
             title: "You Control the Cost",
             description: "Creators pay for minting; fans claim for free. Transparent pricing, no hidden fees."
+        },
+        {
+            icon: Layers, // or another relevant icon
+            title: "Powered by Compression",
+            description: "Leverages Solana's compressed NFTs to scale to millions of users without breaking the bank."
         }
     ];
 
