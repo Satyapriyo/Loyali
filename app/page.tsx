@@ -12,6 +12,7 @@ import CtaSection from '@/components/CtaSection';
 
 import Footer from "@/components/Footer";
 import VideoSection from '@/components/VideoSection';
+import ServicesUsed from '@/components/ServicesUsed';
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <div className="min-h-screen">
         <Hero />
         <WhatIsLoyali />
+        <ServicesUsed />
         <Features />
         <HowItWorks />
         <ForWhoSection />
