@@ -12,7 +12,7 @@ const ServicesUsed = () => {
                         <img className="col-span-2 max-h-32 w-full object-contain lg:col-span-1" src="/Supabase.png" alt="Reform" width="168" height="58" />
                         <img className="col-span-2 max-h-20/30 w-full object-contain lg:col-span-1" src="/Next.js.png" alt="Tuple" width="168" height="58" />
                         <img className="col-span-2 max-h-20/30 w-full object-contain sm:col-start-2 lg:col-span-1" src="/Vercel.png" alt="SavvyCal" width="168" height="58" />
-                        <img className="col-span-2 col-start-2 max-h-20/30 w-full object-contain sm:col-start-auto lg:col-span-1" src="/solana.png" alt="Statamic" width="168" height="58" />
+                        <img className="col-span-2 col-start-2 max-h-20/30 w-full object-contain sm:col-start-auto lg:col-span-1" src="/Solana.png" alt="Statamic" width="168" height="58" />
                     </div>
                 </div>
             </div>
