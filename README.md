@@ -1,5 +1,16 @@
 # Loyali 🪙
 
+
+
+
+
+https://github.com/user-attachments/assets/a1157b67-153d-483d-bcba-7b338be9d7c8
+
+
+
+
+
+
 Loyali is a no-code loyalty drop platform built on Solana using compressed NFTs (cNFTs). It enables creators to mint and distribute loyalty rewards to their fans — seamlessly, securely, and at scale.
 
 ## 🌟 Features
